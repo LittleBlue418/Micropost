@@ -2,6 +2,7 @@ import { http } from './http';
 import { ui } from './ui';
 const url = 'http://localhost:3000/posts'
 
+
 // Get posts on DOM load
 document.addEventListener('DOMContentLoaded', getPosts);
 
@@ -11,6 +12,8 @@ document.querySelector('.post-submit').addEventListener('click', submitPost);
 // Listen for delete
 document.querySelector('#posts').addEventListener('click', deletePost);
 
+// Listen for edit state
+document.querySelector('#posts').addEventListener('click', enableEdit)
 
 
 
@@ -59,5 +62,28 @@ function deletePost(e) {
         })
         .catch(error => console.log(error))
     }
+  }
+}
+
+// Enable edit state
+function enableEdit(e) {
+  e.preventDefault();
+  if(e.target.parentElement.classList.contains('edit')){
+    // Get the element that has been clicked on
+    const id = e.target.parentElement.dataset.id;
+    const title = e.target.parentElement.previousElementSibling.previousElementSibling.textContent;
+    const body = e.target.parentElement.previousElementSibling.textContent;
+    const targetDiv = e.target.parentElement.parentElement.parentElement;
+
+    // combine into object
+    const data = {
+      id,
+      title,
+      body
+    }
+
+    // Fill in the form with the current post
+    ui.toggleEditcolor(targetDiv);
+    ui.fillForm(data);
   }
 }

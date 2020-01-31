@@ -71,6 +71,16 @@ class UI {
     this.titleInput.value = '';
     this.bodyInput.value = '';
   }
+
+  toggleEditcolor(targetDiv) {
+    targetDiv.classList.toggle("highlight")
+  }
+
+  fillForm(data) {
+    this.titleInput.value = data.title;
+    this.bodyInput.value = data.body;
+    this.idInput.value = data.id;
+  }
 }
 
 
